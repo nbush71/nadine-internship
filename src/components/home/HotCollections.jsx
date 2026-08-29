@@ -50,7 +50,7 @@ const HotCollections = () => {
             </div>
           </div>
         </div>
-        {<Skeleton />}
+        <Skeleton height={200} width={100} borderRadius={20} />
         <div className="hot-collections-slider">
           <button onClick={() => instanceRef.current?.prev()} className="d-nav-left">
             <i className="fa fa-chevron-left"></i>
