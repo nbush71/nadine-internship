@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+// import skeleton from 'rect-loading-skeleton';
+// import 'react-loading-skeleton/dist/skeleton.css';
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
@@ -12,6 +14,9 @@ const HotCollections = () => {
       perView: 4,
       spacing: 12,
     },
+    if(loading) {
+      return <div>Loading...</div>;
+    },
     breakpoints: {
       "(max-width: 768px)": {
         slides: { perView: 1, spacing: 10 },
@@ -19,9 +24,6 @@ const HotCollections = () => {
       "(max-width: 1024px)": {
         slides: { perView: 2, spacing: 10 },
       },
-    },
-    if(loading) {
-      return <div>Loading...</div>;
     },
   });
 

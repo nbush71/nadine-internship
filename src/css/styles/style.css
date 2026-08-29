@@ -16732,3 +16732,7 @@ img {
   top: 50%;
   transform: translateY(-50%);
 }
+
+.hot-collections-slider .keen-slider {
+  overflow: hidden;
+}
