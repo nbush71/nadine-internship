@@ -48,7 +48,7 @@ const HotCollections = () => {
             </div>
           </div>
         </div>
-        <button onClick={() => instanceRef.current?.prev()}>
+        <button onClick={() => instanceRef.current?.prev()} className="d-nav-left i">
           &#8249;
         </button>
         <div ref={sliderRef} className="keen-slider">
@@ -84,7 +84,7 @@ const HotCollections = () => {
             </div>
           ))}
         </div>
-        <button onClick={() => instanceRef.current?.next()}>
+        <button onClick={() => instanceRef.current?.next()} className="d-nav-right d-nav-right i">
           &#8250;
         </button>
       </div>
