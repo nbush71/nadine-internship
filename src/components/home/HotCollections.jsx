@@ -48,8 +48,8 @@ const HotCollections = () => {
             </div>
           </div>
         </div>
-        <button onClick={() => instanceRef.current?.prev()} className="d-nav-left i">
-          &#8249;
+        <button onClick={() => instanceRef.current?.prev()} className="d-nav-left">
+          <i>&#8249;</i>
         </button>
         <div ref={sliderRef} className="keen-slider">
           {collections.map((collection, index) => (
@@ -84,8 +84,8 @@ const HotCollections = () => {
             </div>
           ))}
         </div>
-        <button onClick={() => instanceRef.current?.next()} className="d-nav-right d-nav-right i">
-          &#8250;
+        <button onClick={() => instanceRef.current?.next()} className="d-nav-right">
+          <i>&#8250;</i>
         </button>
       </div>
     </section>
