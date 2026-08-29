@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Skeleton from 'rect-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import Skeleton from "../UI/Skeleton";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
   const { isLoading } = useState([]);
-
-  const { data: collection } = useQuery({collections});
   
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
@@ -53,7 +50,7 @@ const HotCollections = () => {
             </div>
           </div>
         </div>
-        {isLoading ? <Skeleton /> : collection.title}
+        {<Skeleton />}
         <div className="hot-collections-slider">
           <button onClick={() => instanceRef.current?.prev()} className="d-nav-left">
             <i className="fa fa-chevron-left"></i>
