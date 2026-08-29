@@ -6,11 +6,11 @@ import "keen-slider/keen-slider.min.css";
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
 
-  const [sliderRef] = useKeenSlider({
+  const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
     slides: {
       perView: 4,
-      spacing: 15,
+      spacing: 12,
     },
     breakpoints: {
       "(max-width: 768px)": {
@@ -19,6 +19,9 @@ const HotCollections = () => {
       "(max-width: 1024px)": {
         slides: { perView: 2, spacing: 10 },
       },
+    },
+    if(loading) {
+      return <div>Loading...</div>;
     },
   });
 
@@ -45,9 +48,11 @@ const HotCollections = () => {
             </div>
           </div>
         </div>
-      
+        <button onClick={() => instanceRef.current?.prev()}>
+          &#8249;
+        </button>
         <div ref={sliderRef} className="keen-slider">
-          {collections.slice(0,4).map((collection, index) => (
+          {collections.map((collection, index) => (
             <div className="keen-slider__slide" key={index}>
               <div className="nft_coll">
                 <div className="nft_wrap">
@@ -79,6 +84,9 @@ const HotCollections = () => {
             </div>
           ))}
         </div>
+        <button onClick={() => instanceRef.current?.next()}>
+          &#8250;
+        </button>
       </div>
     </section>
   );
