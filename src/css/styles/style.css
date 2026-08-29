@@ -16714,3 +16714,21 @@ img {
 .no-cursor {
   cursor: not-allowed;
 }
+
+.hot-collections-slider {
+  position: relative;
+}
+
+.hot-collections-slider .d-nav-left,
+.hot-collections-slider .d-nav-right {
+  top: 50%;
+  transform: translateY(-50%);
+}.hot-collections-slider {
+  position: relative;
+}
+
+.hot-collections-slider .d-nav-left,
+.hot-collections-slider .d-nav-right {
+  top: 50%;
+  transform: translateY(-50%);
+}
