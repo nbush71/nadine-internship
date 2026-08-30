@@ -6,7 +6,7 @@ import "keen-slider/keen-slider.min.css";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
-  const { isLoading } = useState([]);
+  const { isLoading, setIsLoading } = useState(false);
   
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
@@ -50,11 +50,12 @@ const HotCollections = () => {
             </div>
           </div>
         </div>
-        <Skeleton height={200} width={100} borderRadius={20} />
+        
         <div className="hot-collections-slider">
           <button onClick={() => instanceRef.current?.prev()} className="d-nav-left">
             <i className="fa fa-chevron-left"></i>
           </button>
+          {isLoading ? (<Skeleton height={307} width={270} borderRadius={20} />) : (sliderRef) }
           <div ref={sliderRef} className="keen-slider">
             {collections.map((collection, index) => (
               <div className="keen-slider__slide" key={index}>
@@ -88,6 +89,7 @@ const HotCollections = () => {
               </div>
             ))}
           </div>
+          
           <button onClick={() => instanceRef.current?.next()} className="d-nav-right">
             <i className="fa fa-chevron-right"></i>
           </button>
