@@ -7,6 +7,7 @@ import NewItems from "../components/home/NewItems";
 import TopSellers from "../components/home/TopSellers";
 
 const Home = () => {
+  console.error("HOME COMPONENT IS RUNNING");
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -15,6 +16,7 @@ const Home = () => {
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
+        <h1>HOME TEST 456123</h1>
         <Landing />
         <LandingIntro />
         <HotCollections />

@@ -10,6 +10,7 @@ const NewItems = () => {
     );
     const data = await response.json();
     console.log("NewItems data:", data);
+    console.log("NEW ITEMS COMPONENT IS RUNNING");
     setItems(data);
   }
 
@@ -64,7 +65,9 @@ const NewItems = () => {
 
                   <Link to="/item-details">
                     <img
-                      src={item.nftImage} alt=""
+                      src={item.nftImage}
+                      className="lazy nft__item_preview"
+                      alt=""
                     />
                   </Link>
                 </div>
