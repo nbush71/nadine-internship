@@ -6,7 +6,7 @@ import "keen-slider/keen-slider.min.css";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
-  //const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
@@ -35,10 +35,14 @@ const NewItems = () => {
 
   useEffect(() => {
     fetchItems();
-    if (items.length && instanceRef.current) {
-    instanceRef.current.update();
+    
+  }, []);
+
+  useEffect(() => {
+  if (items.length > 0) {
+    instanceRef.current?.update();
   }
-}, [items, instanceRef]);
+}, [items]);
 
   return (
     <section id="section-items" className="no-bottom">
@@ -58,7 +62,7 @@ const NewItems = () => {
               <i className="fa fa-chevron-left"></i>
             </button>
             <div ref={sliderRef} className="keen-slider">
-              {items.slice(0, 4).map((item, index) => (
+              {items.map((item, index) => (
                 <div className="keen-slider__slide" key={index}>
                   <div className="nft__item">
                     <div className="author_list_pp">
