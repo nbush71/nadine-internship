@@ -6,7 +6,7 @@ import "keen-slider/keen-slider.min.css";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  //const [isLoading, setIsLoading] = useState(true);
 
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
@@ -35,7 +35,10 @@ const NewItems = () => {
 
   useEffect(() => {
     fetchItems();
-  }, []);
+    if (items.length && instanceRef.current) {
+    instanceRef.current.update();
+  }
+}, [items, instanceRef]);
 
   return (
     <section id="section-items" className="no-bottom">

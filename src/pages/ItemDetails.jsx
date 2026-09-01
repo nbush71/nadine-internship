@@ -27,7 +27,7 @@ const ItemDetails = () => {
         <div id="top"></div>
         <section aria-label="section" className="mt90 sm-mt-0">
 
-         {items.slice(0, 1).map((item, index) => (
+         {items.slice(0, 1)((item, index) => (
           <div className="container" key={index}>
             <div className="row">
               <div className="col-md-6 text-center">
