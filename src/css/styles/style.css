@@ -16715,6 +16715,7 @@ img {
   cursor: not-allowed;
 }
 
+/* Hot Collections Slider */
 .hot-collections-slider {
   position: relative;
 }
@@ -16734,5 +16735,29 @@ img {
 }
 
 .hot-collections-slider .keen-slider {
+  overflow: hidden;
+}
+
+/* NewItems Slider */
+
+.new-items-slider {
+  position: relative;
+}
+
+.new-items-slider .d-nav-left,
+.new-items-slider .d-nav-right {
+  top: 50%;
+  transform: translateY(-50%);
+}.new-items-slider {
+  position: relative;
+}
+
+.new-items-slider .d-nav-left,
+.new-items-slider .d-nav-right {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.new-items-slider .keen-slider {
   overflow: hidden;
 }
