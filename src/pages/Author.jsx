@@ -1,10 +1,32 @@
-import React from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
+import React, { useEffect, useState } from "react";
 
 const Author = () => {
+  const { id } = useParams();
+  const [items, setItems] = React.useState([]);
+  const item = items.find((i) => i.authorId === Number(id));
+  console.log(id);
+
+  async function fetchItems() {
+        const response = await fetch(
+          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
+        );
+    
+        const data = await response.json();
+        console.log('WORKS', data);
+        setItems(data);
+      }
+    
+      useEffect(() => {
+        fetchItems();
+        window.scrollTo(0, 0);
+      }, []);
+
+    if (!item) return null;
+
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
@@ -25,7 +47,7 @@ const Author = () => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={AuthorImage} alt="" />
+                      <img src={item.authorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">

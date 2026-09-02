@@ -86,7 +86,7 @@ const ItemDetails = () => {
                           </Link>
                         </div> 
                         <div className="author_list_info">
-                          <Link to={`/author/${item.authorId}`}>{item.nftId}</Link>
+                          <Link to={`/author/${item.authorId}`}>{item.authorId}</Link>
                         </div>
                       </div>
                     </div>
