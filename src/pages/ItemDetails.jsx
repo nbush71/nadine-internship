@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 const ItemDetails = () => {
   const { id } = useParams();
   const [ items, setItems ] = React.useState([]);
+  const item = items.find((i) => i.id === Number(id));
 
   async function fetchItems() {
       const response = await fetch(
@@ -21,14 +22,15 @@ const ItemDetails = () => {
       window.scrollTo(0, 0);
     }, []);
 
+    if (!item) return null;
+
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
         <section aria-label="section" className="mt90 sm-mt-0">
 
-         {items.slice(0, 1).map((item, index) => (
-          <div className="container" key={index}>
+          <div className="container">
             <div className="row">
               <div className="col-md-6 text-center">
                 <img
@@ -67,7 +69,7 @@ const ItemDetails = () => {
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${item.authorId}`}>{item.authorName}</Link>
+                          <Link to={`/author/${item.authorId}`}>{item.authorId}</Link>
                         </div>
                       </div>
                     </div>
@@ -78,13 +80,13 @@ const ItemDetails = () => {
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to={`/author/${item.creatorId}`}>
-                            <img className="lazy" src={item.creatorImage} alt="" />
+                          <Link to={`/author/${item.authorId}`}>
+                            <img className="lazy" src={item.authorImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
-                        </div>
+                        </div> 
                         <div className="author_list_info">
-                          <Link to={`/author/${item.creatorId}`}>{item.creatorName}</Link>
+                          <Link to={`/author/${item.authorId}`}>{item.nftId}</Link>
                         </div>
                       </div>
                     </div>
@@ -92,14 +94,13 @@ const ItemDetails = () => {
                     <h6>Price</h6>
                     <div className="nft-item-price">
                       <img src={EthImage} alt="" />
-                      <span>5.07</span>
+                      <span>{item.price}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-         ))}
         </section>
       </div>
     </div>
