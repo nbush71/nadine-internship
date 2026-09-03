@@ -4,10 +4,30 @@ import { Link } from "react-router-dom";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
+function futureTime(endTime) {
+  const currentTime = new Date();
+  const endDateTime = new Date(endTime);
+  const timeDifference = endDateTime - currentTime;
+
+  if (timeDifference <= 0) {
+    return { hours: 0, minutes: 0, seconds: 0 };
+  }
+
+  const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+  const minutes = Math.floor(
+    (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+  );
+  const seconds = Math.floor(
+    (timeDifference % (1000 * 60)) / 1000
+  );
+
+  return { hours, minutes, seconds };
+}
+
 const NewItems = () => {
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
+  //const [isLoading, setIsLoading] = useState(true);
+  const [, setTick] = useState(0); // State to trigger re-render every second
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
     slides: {
@@ -33,16 +53,27 @@ const NewItems = () => {
     setItems(data);
   }
 
+  
   useEffect(() => {
     fetchItems();
-    
-  }, []);
 
+  }, []);
+  
   useEffect(() => {
-  if (items.length > 0) {
-    instanceRef.current?.update();
-  }
-}, [items]);
+  const timer = setInterval(() => {
+    setTick((tick) => tick + 1);
+  }, 1000);
+
+  return () => clearInterval(timer);
+}, []);
+  
+  useEffect(() => {
+    if (items.length > 0) {
+      instanceRef.current?.update();
+    }
+  }, [items]);
+
+  
 
   return (
     <section id="section-items" className="no-bottom">
@@ -67,13 +98,14 @@ const NewItems = () => {
                   <div className="nft__item">
                     <div className="author_list_pp">
                       <Link to={`/author/${item.authorId}`}>
-                      
+
                         <img className="lazy" src={item.authorImage} alt="" />
                         <i className="fa fa-check"></i>
                       </Link>
                     </div>
-                    <div className="de_countdown">5h 30m 32s</div>
-
+                    <div className="de_countdown">
+                      {futureTime(item.expiryDate).hours}h {futureTime(item.expiryDate).minutes}m {futureTime(item.expiryDate).seconds}s
+                    </div>
                     <div className="nft__item_wrap">
                       <div className="nft__item_extra">
                         <div className="nft__item_buttons">
@@ -120,8 +152,8 @@ const NewItems = () => {
               <i className="fa fa-chevron-right"></i>
             </button>
           </div>
-          </div>
         </div>
+      </div>
     </section>
   );
 };
