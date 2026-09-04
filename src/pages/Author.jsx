@@ -10,20 +10,23 @@ const Author = () => {
   console.log(id);
 
   async function fetchItems() {
-        const response = await fetch(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
-        );
-    
-        const data = await response.json();
-        setItems(data);
-      }
-    
-      useEffect(() => {
-        fetchItems();
-        window.scrollTo(0, 0);
-      }, []);
+    const [newItemsResponse, topSellersResponse] = await Promise.all([
+      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"),
+      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"),
+    ]);
 
-    if (!item) return null;
+    const newItems = await newItemsResponse.json();
+    const topSellers = await topSellersResponse.json();
+    
+    setItems([...newItems, ...topSellers]);
+  }
+
+  useEffect(() => {
+    fetchItems();
+    window.scrollTo(0, 0);
+  }, []);
+
+  if (!item) return null;
 
   return (
     <div id="wrapper">
