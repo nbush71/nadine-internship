@@ -8,6 +8,7 @@ function futureTime(endTime) {
   const endDateTime = new Date(endTime);
   const timeDifference = endDateTime - currentTime;
 
+
   if (timeDifference <= 0) {
     return { hours: 0, minutes: 0, seconds: 0 };
   }
@@ -25,6 +26,7 @@ function futureTime(endTime) {
 
 const ExploreItems = () => {
   const [items, setItems] = useState([]);
+  const [visibleItems, setVisibleItems] = useState(8);
   const [, setTick] = useState(0);
 
   async function fetchItems() {
@@ -59,7 +61,7 @@ const ExploreItems = () => {
           <option value="likes_high_to_low">Most liked</option>
         </select>
       </div>
-      {items.slice(0, 8).map((item, index) => (
+      {items.slice(0, visibleItems).map((item, index) => (
         <div
           key={index}
           className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
@@ -120,9 +122,13 @@ const ExploreItems = () => {
         </div>
       ))}
       <div className="col-md-12 text-center">
-        <Link to="" id="loadmore" className="btn-main lead">
+        <button
+          id="loadmore"
+          className="btn-main lead"
+          onClick={() => setVisibleItems((prev) => prev + 4)}
+        >
           Load more
-        </Link>
+        </button>
       </div>
     </>
   );
