@@ -1,31 +1,32 @@
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link, useParams } from "react-router-dom";
-import AuthorImage from "../images/author_thumbnail.jpg";
 import React, { useEffect, useState } from "react";
 
 const Author = () => {
   const { id } = useParams();
-  const [items, setItems] = React.useState([]);
+  const [items, setItems] = useState([]);
   const item = items.find((i) => i.authorId === Number(id));
   console.log(id);
 
   async function fetchItems() {
-        const response = await fetch(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
-        );
-    
-        const data = await response.json();
-        console.log('WORKS', data);
-        setItems(data);
-      }
-    
-      useEffect(() => {
-        fetchItems();
-        window.scrollTo(0, 0);
-      }, []);
+    const [newItemsResponse, topSellersResponse] = await Promise.all([
+      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"),
+      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"),
+    ]);
 
-    if (!item) return null;
+    const newItems = await newItemsResponse.json();
+    const topSellers = await topSellersResponse.json();
+    
+    setItems([...newItems, ...topSellers]);
+  }
+
+  useEffect(() => {
+    fetchItems();
+    window.scrollTo(0, 0);
+  }, []);
+
+  if (!item) return null;
 
   return (
     <div id="wrapper">
@@ -52,7 +53,7 @@ const Author = () => {
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          Monica Lucas
+                          {item.authorName}
                           <span className="profile_username">@monicaaaa</span>
                           <span id="wallet" className="profile_wallet">
                             UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
