@@ -30,10 +30,10 @@ const ExploreItems = () => {
   const [, setTick] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  async function fetchItems() {
-
+  async function fetchItems(filter) {
     const response = await fetch(
-      "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore"
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore${filter ? `?filter=${filter}` : ""
+      }`
     );
 
     const data = await response.json();
@@ -56,7 +56,11 @@ const ExploreItems = () => {
   return (
     <>
       <div>
-        <select id="filter-items" defaultValue="">
+        <select
+          id="filter-items"
+          defaultValue=""
+          onChange={(event) => fetchItems(event.target.value)}
+        >
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
           <option value="price_high_to_low">Price, High to Low</option>
@@ -196,6 +200,7 @@ const ExploreItems = () => {
         </>
       )}
     </>
-  )};
+  )
+};
 
 export default ExploreItems;
