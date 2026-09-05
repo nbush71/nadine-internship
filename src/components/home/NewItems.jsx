@@ -57,7 +57,6 @@ const NewItems = () => {
 
   useEffect(() => {
     fetchItems();
-
   }, []);
 
   useEffect(() => {
