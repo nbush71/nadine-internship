@@ -7,16 +7,20 @@ const Author = () => {
   const { id } = useParams();
   const [items, setItems] = useState([]);
   const item = items.find((i) => i.authorId === Number(id));
-  console.log(id);
+  
+  //console.log(id);
 
   async function fetchItems() {
-    const [newItemsResponse, topSellersResponse] = await Promise.all([
+    const [newItemsResponse, topSellersResponse, authorsResponse] = await Promise.all([
       fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"),
       fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"),
+      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=73855012"),
     ]);
 
     const newItems = await newItemsResponse.json();
     const topSellers = await topSellersResponse.json();
+   // const authors = await authorsResponse.json();
+    console.log('AUTHORS', id);
     
     setItems([...newItems, ...topSellers]);
   }
@@ -53,10 +57,10 @@ const Author = () => {
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          {item.authorName}
-                          <span className="profile_username">@monicaaaa</span>
+                          {item.title}
+                          <span className="profile_username">@{item.tag}</span>
                           <span id="wallet" className="profile_wallet">
-                            UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
+                            {item.address}
                           </span>
                           <button id="btn_copy" title="Copy Text">
                             Copy
@@ -67,7 +71,7 @@ const Author = () => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">573 followers</div>
+                      <div className="profile_follower">{item.followers} followers</div>
                       <Link to="#" className="btn-main">
                         Follow
                       </Link>
