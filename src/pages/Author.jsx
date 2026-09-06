@@ -4,25 +4,60 @@ import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 const Author = () => {
-  const { id } = useParams();
+  const { id: paramsId } = useParams();
   const [items, setItems] = useState([]);
-  const item = items.find((i) => i.authorId === Number(id));
-  
-  //console.log(id);
+  const [loading, setLoading] = useState(true);
+  const [author, setAuthor] = useState({
+    address: "",
+    tag: "",
+    authorId: "",
+    authorImage: "",
+    authorName: "",
+    followers: "",
+    id: "",
+  });
 
   async function fetchItems() {
-    const [newItemsResponse, topSellersResponse, authorsResponse] = await Promise.all([
-      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"),
-      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"),
-      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=73855012"),
-    ]);
+    const [newItemsResponse, topSellersResponse, authorsResponse] =
+      await Promise.all([
+        fetch(
+          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems",
+        ),
+        fetch(
+          "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers",
+        ),
+        fetch(
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${paramsId}`,
+        ),
+      ]);
 
     const newItems = await newItemsResponse.json();
     const topSellers = await topSellersResponse.json();
-   // const authors = await authorsResponse.json();
-    console.log('AUTHORS', id);
-    
-    setItems([...newItems, ...topSellers]);
+    const author = await authorsResponse.json();
+    console.log(author);
+    setLoading(false);
+    const {
+      address,
+      authorId,
+      authorImage,
+      authorName,
+      followers,
+      id,
+      tag,
+      nftCollection,
+    } = author;
+
+    setAuthor({
+      address,
+      authorId,
+      authorImage,
+      authorName,
+      followers,
+      id,
+      tag,
+    });
+
+    setItems(nftCollection);
   }
 
   useEffect(() => {
@@ -30,7 +65,7 @@ const Author = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  if (!item) return null;
+  if (!author) return null;
 
   return (
     <div id="wrapper">
@@ -49,40 +84,87 @@ const Author = () => {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                <div className="d_profile de-flex">
-                  <div className="de-flex-col">
-                    <div className="profile_avatar">
-                      <img src={item.authorImage} alt="" />
+                {loading ? (
+                  <>
+                    {/* INCLUDE SKELETON LOADING STATE HERE */}
+                    <div className="d_profile de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_avatar">
+                          <img src={author.authorImage} alt="" />
 
-                      <i className="fa fa-check"></i>
-                      <div className="profile_name">
-                        <h4>
-                          {item.title}
-                          <span className="profile_username">@{item.tag}</span>
-                          <span id="wallet" className="profile_wallet">
-                            {item.address}
-                          </span>
-                          <button id="btn_copy" title="Copy Text">
-                            Copy
-                          </button>
-                        </h4>
+                          <i className="fa fa-check"></i>
+                          <div className="profile_name">
+                            <h4>
+                              {author.title}
+                              <span className="profile_username">
+                                @{author.tag}
+                              </span>
+                              <span id="wallet" className="profile_wallet">
+                                {author.address}
+                              </span>
+                              <button id="btn_copy" title="Copy Text">
+                                Copy
+                              </button>
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="profile_follow de-flex">
+                        <div className="de-flex-col">
+                          <div className="profile_follower">
+                            {author.followers} followers
+                          </div>
+                          <Link to="#" className="btn-main">
+                            Follow
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="d_profile de-flex">
+                    <div className="de-flex-col">
+                      <div className="profile_avatar">
+                        <img src={author.authorImage} alt="" />
+
+                        <i className="fa fa-check"></i>
+                        <div className="profile_name">
+                          <h4>
+                            {author.title}
+                            <span className="profile_username">
+                              @{author.tag}
+                            </span>
+                            <span id="wallet" className="profile_wallet">
+                              {author.address}
+                            </span>
+                            <button id="btn_copy" title="Copy Text">
+                              Copy
+                            </button>
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profile_follow de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_follower">
+                          {author.followers} followers
+                        </div>
+                        <Link to="#" className="btn-main">
+                          Follow
+                        </Link>
                       </div>
                     </div>
                   </div>
-                  <div className="profile_follow de-flex">
-                    <div className="de-flex-col">
-                      <div className="profile_follower">{item.followers} followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  <AuthorItems
+                    items={items}
+                    authorImage={author.authorImage}
+                    loading={loading}
+                  />
                 </div>
               </div>
             </div>
