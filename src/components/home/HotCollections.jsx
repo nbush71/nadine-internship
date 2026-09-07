@@ -24,21 +24,26 @@ const HotCollections = () => {
     },
   });
 
+  useEffect(() => {
+  let timeout;
+
   async function fetchCollections() {
     const response = await fetch(
-      "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections",
+      "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
     );
+
     const data = await response.json();
     setCollections(data);
 
-    setTimeout(() => {
+    timeout = setTimeout(() => {
       setIsLoading(false);
     }, 3000);
   }
 
-  useEffect(() => {
-    fetchCollections();
-  }, []);
+  fetchCollections();
+
+  return () => clearTimeout(timeout);
+}, []);
 
   return (
     <section id="section-collections" className="no-bottom">

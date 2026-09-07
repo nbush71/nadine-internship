@@ -2,23 +2,54 @@ import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import Skeleton from "../components/UI/Skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Author = () => {
-  const { id } = useParams();
+  const { id: paramsId } = useParams();
   const [items, setItems] = useState([]);
-  const item = items.find((i) => i.authorId === Number(id));
-  console.log(id);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [author, setAuthor] = useState({
+    address: "",
+    tag: "",
+    authorId: "",
+    authorImage: "",
+    authorName: "",
+    followers: "",
+    id: "",
+  });
 
   async function fetchItems() {
-    const [newItemsResponse, topSellersResponse] = await Promise.all([
-      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"),
-      fetch("https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"),
-    ]);
+    const response = await fetch(
+    `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${paramsId}`
+  );
 
-    const newItems = await newItemsResponse.json();
-    const topSellers = await topSellersResponse.json();
+    const author = await response.json();
     
-    setItems([...newItems, ...topSellers]);
+    const {
+      address,
+      authorId,
+      authorImage,
+      authorName,
+      followers,
+      id,
+      tag,
+      nftCollection,
+    } = author;
+
+    setAuthor({
+      address,
+      authorId,
+      authorImage,
+      authorName,
+      followers,
+      id,
+      tag,
+    });
+
+    setItems(nftCollection);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -26,7 +57,7 @@ const Author = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  if (!item) return null;
+  if (!author) return null;
 
   return (
     <div id="wrapper">
@@ -45,40 +76,88 @@ const Author = () => {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                <div className="d_profile de-flex">
-                  <div className="de-flex-col">
-                    <div className="profile_avatar">
-                      <img src={item.authorImage} alt="" />
+                {isLoading ? (
+                  <>
+                    <div className="d_profile de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_avatar">
+                          <Skeleton 
+                            width={150}
+                            height={150}
+                            borderRadius={500}/>
 
-                      <i className="fa fa-check"></i>
-                      <div className="profile_name">
-                        <h4>
-                          {item.authorName}
-                          <span className="profile_username">@monicaaaa</span>
-                          <span id="wallet" className="profile_wallet">
-                            UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
-                          </span>
-                          <button id="btn_copy" title="Copy Text">
-                            Copy
-                          </button>
-                        </h4>
+                          <i className="fa fa-check"></i>
+                          <div className="profile_name">
+                            <h4><Skeleton width={50} height={20} />
+                              <span className="profile_username">
+                                <Skeleton  width={20} height={30} /></span>
+                              <span id="wallet" className="profile_wallet">
+                                <Skeleton width={100} height={20}/>
+                              </span>
+                              <button id="btn_copy" title="Copy Text">
+                                <Skeleton width={40} height={20} />
+                              </button>
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="profile_follow de-flex">
+                        <div className="de-flex-col">
+                          <div className="profile_follower">
+                            <Skeleton width={50} height={20} />
+                          </div>
+                          <Link to="#" className="btn-main">
+                            <Skeleton width={50} height={20} />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="d_profile de-flex">
+                    <div className="de-flex-col">
+                      <div className="profile_avatar">
+                        <img src={author.authorImage} alt="" />
+
+                        <i className="fa fa-check"></i>
+                        <div className="profile_name">
+                          <h4>
+                            {author.authorName}
+                            <span className="profile_username">
+                              @{author.tag}
+                            </span>
+                            <span id="wallet" className="profile_wallet">
+                              {author.address}
+                            </span>
+                            <button id="btn_copy" title="Copy Text">
+                              Copy
+                            </button>
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profile_follow de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_follower">
+                          {Number(author.followers) + (isFollowing ? 1 : 0)} followers
+                        </div>
+                        <button className="btn-main" 
+                          onClick={() => setIsFollowing((prev) => !prev)}>
+                          {isFollowing ? "Unfollow" : "Follow"}
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <div className="profile_follow de-flex">
-                    <div className="de-flex-col">
-                      <div className="profile_follower">573 followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  <AuthorItems
+                    items={items}
+                    authorImage={author.authorImage}
+                    isLoading={isLoading}
+                  />
                 </div>
               </div>
             </div>
