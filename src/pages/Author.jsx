@@ -8,7 +8,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 const Author = () => {
   const { id: paramsId } = useParams();
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
   const [author, setAuthor] = useState({
     address: "",
     tag: "",
@@ -20,23 +21,12 @@ const Author = () => {
   });
 
   async function fetchItems() {
-    const [newItemsResponse, topSellersResponse, authorsResponse] =
-      await Promise.all([
-        fetch(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems",
-        ),
-        fetch(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers",
-        ),
-        fetch(
-          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${paramsId}`,
-        ),
-      ]);
+    const response = await fetch(
+    `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${paramsId}`
+  );
 
-    const newItems = await newItemsResponse.json();
-    const topSellers = await topSellersResponse.json();
-    const author = await authorsResponse.json();
-    setLoading(false);
+    const author = await response.json();
+    
     const {
       address,
       authorId,
@@ -59,6 +49,7 @@ const Author = () => {
     });
 
     setItems(nftCollection);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -85,27 +76,26 @@ const Author = () => {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                {loading ? (
+                {isLoading ? (
                   <>
-                    {/* INCLUDE SKELETON LOADING STATE HERE */}
                     <div className="d_profile de-flex">
                       <div className="de-flex-col">
                         <div className="profile_avatar">
-                          <Skeleton />
-                          <img src={author.authorImage} alt="" />
+                          <Skeleton 
+                            width={150}
+                            height={150}
+                            borderRadius={500}/>
 
                           <i className="fa fa-check"></i>
                           <div className="profile_name">
-                            <h4>
-                              {author.title}
+                            <h4><Skeleton width={50} height={20} />
                               <span className="profile_username">
-                                @{author.tag}
-                              </span>
+                                <Skeleton  width={20} height={30} /></span>
                               <span id="wallet" className="profile_wallet">
-                                {author.address}
+                                <Skeleton width={100} height={20}/>
                               </span>
                               <button id="btn_copy" title="Copy Text">
-                                Copy
+                                <Skeleton width={40} height={20} />
                               </button>
                             </h4>
                           </div>
@@ -114,10 +104,10 @@ const Author = () => {
                       <div className="profile_follow de-flex">
                         <div className="de-flex-col">
                           <div className="profile_follower">
-                            {author.followers} followers
+                            <Skeleton width={50} height={20} />
                           </div>
                           <Link to="#" className="btn-main">
-                            Follow
+                            <Skeleton width={50} height={20} />
                           </Link>
                         </div>
                       </div>
@@ -132,7 +122,7 @@ const Author = () => {
                         <i className="fa fa-check"></i>
                         <div className="profile_name">
                           <h4>
-                            {author.title}
+                            {author.authorName}
                             <span className="profile_username">
                               @{author.tag}
                             </span>
@@ -149,11 +139,12 @@ const Author = () => {
                     <div className="profile_follow de-flex">
                       <div className="de-flex-col">
                         <div className="profile_follower">
-                          {author.followers} followers
+                          {Number(author.followers) + (isFollowing ? 1 : 0)} followers
                         </div>
-                        <Link to="#" className="btn-main">
-                          Follow
-                        </Link>
+                        <button className="btn-main" 
+                          onClick={() => setIsFollowing((prev) => !prev)}>
+                          {isFollowing ? "Unfollow" : "Follow"}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -165,7 +156,7 @@ const Author = () => {
                   <AuthorItems
                     items={items}
                     authorImage={author.authorImage}
-                    loading={loading}
+                    isLoading={isLoading}
                   />
                 </div>
               </div>

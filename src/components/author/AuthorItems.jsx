@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-const AuthorItems = ({ items, authorImage, loading }) => {
+const AuthorItems = ({ items, authorImage, isLoading }) => {
 
   return (
     <div className="de_tab_content">
       <div className="tab-1">
         <div className="row">
-          {loading ? (
+          {isLoading ? (
             <>
-              {new Array(8).fill(0).map((item, index) => (
+              {new Array(8).fill(0).map((_, index) => (
                 <div
                   className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
                   key={index}
@@ -17,7 +19,10 @@ const AuthorItems = ({ items, authorImage, loading }) => {
                   <div className="nft__item">
                     <div className="author_list_pp">
                       <Link to="">
-                        <img className="lazy" src={authorImage} alt="" />
+                        <Skeleton 
+                            width={50}
+                            height={50}
+                            circle />
                         <i className="fa fa-check"></i>
                       </Link>
                     </div>
@@ -40,21 +45,23 @@ const AuthorItems = ({ items, authorImage, loading }) => {
                         </div>
                       </div>
                       <Link to="/item-details">
-                        <img
-                          src={item.nftImage}
-                          className="lazy nft__item_preview"
-                          alt=""
-                        />
-                      </Link>
+                          <Skeleton
+                            width="100%"
+                            height={200}
+                            borderRadius={10}
+                          />
+                        </Link>
                     </div>
                     <div className="nft__item_info">
                       <Link to="/item-details">
-                        <h4>{item.title}</h4>
+                        <Skeleton width={50} height={20} />
                       </Link>
-                      <div className="nft__item_price">{item.price} ETH</div>
+                      <div className="nft__item_price">
+                        <Skeleton width={10} height={20} /> ETH
+                      </div>
                       <div className="nft__item_like">
                         <i className="fa fa-heart"></i>
-                        <span>{item.likes}</span>
+                        <span><Skeleton width={10} height={20} /></span>
                       </div>
                     </div>
                   </div>
