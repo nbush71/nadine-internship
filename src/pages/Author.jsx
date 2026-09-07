@@ -2,6 +2,8 @@ import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import Skeleton from "../components/UI/Skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Author = () => {
   const { id: paramsId } = useParams();
@@ -34,7 +36,6 @@ const Author = () => {
     const newItems = await newItemsResponse.json();
     const topSellers = await topSellersResponse.json();
     const author = await authorsResponse.json();
-    console.log(author);
     setLoading(false);
     const {
       address,
@@ -90,6 +91,7 @@ const Author = () => {
                     <div className="d_profile de-flex">
                       <div className="de-flex-col">
                         <div className="profile_avatar">
+                          <Skeleton />
                           <img src={author.authorImage} alt="" />
 
                           <i className="fa fa-check"></i>
