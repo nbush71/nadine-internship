@@ -98,23 +98,23 @@ const HotCollections = () => {
               </>
             ) : (
               <>
-                {collections.map((collection, index) => (
+                {collections.map((collections, id, title, authorImage, nftImage, nftId, authorId, code, index) => (
                   <div className="keen-slider__slide" key={index}>
                     <div className="nft_coll">
                       <div className="nft_wrap">
-                        <Link to={`/item-details/${collection.nftId}`}>
+                        <Link to={`/item-details/${nftId}`}>
                           <img
-                            src={collection.nftImage}
+                            src={nftImage}
                             className="lazy img-fluid"
                             alt=""
                           />
                         </Link>
                       </div>
                       <div className="nft_coll_pp">
-                        <Link to={`/author/${collection.authorId}`}>
+                        <Link to={`/author/${authorId}`}>
                           <img
                             className="lazy pp-coll"
-                            src={collection.authorImage}
+                            src={authorImage}
                             alt=""
                           />
                         </Link>
@@ -122,9 +122,9 @@ const HotCollections = () => {
                       </div>
                       <div className="nft_coll_info">
                         <Link to="/explore">
-                          <h4>{collection.title}</h4>
+                          <h4>{title}</h4>
                         </Link>
-                        <span>{collection.code}</span>
+                        <span>{code}</span>
                       </div>
                     </div>
                   </div>
