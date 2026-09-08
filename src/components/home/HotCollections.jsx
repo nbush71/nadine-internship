@@ -37,7 +37,7 @@ const HotCollections = () => {
 
     timeout = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 1000);
   }
 
   fetchCollections();
@@ -46,7 +46,7 @@ const HotCollections = () => {
 }, []);
 
   return (
-    <section id="section-collections" className="no-bottom" data-aos="fade-up">
+    <section id="section-collections" className="no-bottom" data-aos="fade-up" data-aos-delay="200">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -102,7 +102,7 @@ const HotCollections = () => {
                   <div className="keen-slider__slide" key={index}>
                     <div className="nft_coll">
                       <div className="nft_wrap">
-                        <Link to="/item-details">
+                        <Link to={`/item-details/${collection.nftId}`}>
                           <img
                             src={collection.nftImage}
                             className="lazy img-fluid"
@@ -111,7 +111,7 @@ const HotCollections = () => {
                         </Link>
                       </div>
                       <div className="nft_coll_pp">
-                        <Link to="/author">
+                        <Link to={`/author/${collection.authorId}`}>
                           <img
                             className="lazy pp-coll"
                             src={collection.authorImage}

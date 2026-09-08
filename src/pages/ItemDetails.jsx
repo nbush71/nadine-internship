@@ -85,7 +85,7 @@ const ItemDetails = () => {
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
         <section aria-label="section" className="mt90 sm-mt-0">
-          <div className="container">
+          <div className="container" data-aos="fade-in" data-aos-easing="ease" data-aos-delay="500">
             <div className="row">
               {isLoading ? (
                 <>

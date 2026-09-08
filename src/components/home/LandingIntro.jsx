@@ -18,7 +18,7 @@ const LandingIntro = () => {
               <i className="wm icon_wallet"></i>
             </div>
           </div>
-          <div className="col-lg-4 col-md-6 mb-sm-30" data-aos="fade-up">
+          <div className="col-lg-4 col-md-6 mb-sm-30" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="400">
             <div className="feature-box f-boxed style-3">
               <i className="bg-color-2 i-boxed icon_cloud-upload_alt"></i>
               <div className="text">

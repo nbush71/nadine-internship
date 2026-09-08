@@ -60,8 +60,8 @@ const Author = () => {
   if (!author) return null;
 
   return (
-    <div id="wrapper">
-      <div className="no-bottom no-top" id="content">
+    <div id="wrapper" data-aos="fade-in" data-aos-easing="ease" data-aos-delay="500">
+      <div className="no-bottom no-top" id="content" >
         <div id="top"></div>
 
         <section
