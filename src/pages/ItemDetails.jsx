@@ -183,7 +183,7 @@ const ItemDetails = () => {
                           <h6>{author.ownerName}</h6>
                           <div className="item_author">
                             <div className="author_list_pp">
-                              <Link to={`/author/${author.ownerId}`}>
+                              <Link to={`/author/${author.nftId}`}>
                                 <img className="lazy" src={author.ownerImage} alt="" />
                                 <i className="fa fa-check"></i>
                               </Link>
