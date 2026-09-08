@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const AuthorItems = ({ items, authorImage, isLoading }) => {
+const AuthorItems = ({ items, authorImage, nftId, isLoading }) => {
 
   return (
     <div className="de_tab_content">
@@ -44,7 +44,7 @@ const AuthorItems = ({ items, authorImage, isLoading }) => {
                           </div>
                         </div>
                       </div>
-                      <Link to="/item-details">
+                      <Link to={`/item-details/${nftId}`}>
                           <Skeleton
                             width="100%"
                             height={200}
@@ -53,7 +53,7 @@ const AuthorItems = ({ items, authorImage, isLoading }) => {
                         </Link>
                     </div>
                     <div className="nft__item_info">
-                      <Link to="/item-details">
+                      <Link to={`/item-details/${nftId}`}>
                         <Skeleton width={50} height={20} />
                       </Link>
                       <div className="nft__item_price">
@@ -100,7 +100,7 @@ const AuthorItems = ({ items, authorImage, isLoading }) => {
                           </div>
                         </div>
                       </div>
-                      <Link to="/item-details">
+                      <Link to={`/item-details/${nftId}`}>
                         <img
                           src={nftImage}
                           className="lazy nft__item_preview"
@@ -109,7 +109,7 @@ const AuthorItems = ({ items, authorImage, isLoading }) => {
                       </Link>
                     </div>
                     <div className="nft__item_info">
-                      <Link to="/item-details">
+                      <Link to={`/item-details/${nftId}`}>
                         <h4>{title}</h4>
                       </Link>
                       <div className="nft__item_price">{price} ETH</div>
