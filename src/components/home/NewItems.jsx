@@ -74,7 +74,7 @@ const NewItems = () => {
   }, [items]);
 
     return (
-    <section id="section-items" className="no-bottom">
+    <section id="section-items" className="no-bottom" data-aos="fade-in" data-aos-easing="ease" data-aos-delay="300">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
