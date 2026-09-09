@@ -180,7 +180,7 @@ const ItemDetails = () => {
 
                       <div className="d-flex flex-row">
                         <div className="mr40">
-                          <h6>{author.ownerName}</h6>
+                          <h6>Owner</h6>
                           <div className="item_author">
                             <div className="author_list_pp">
                               <Link to={`/author/${author.ownerId}`}>
