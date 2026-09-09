@@ -114,7 +114,7 @@ const ItemDetails = () => {
                           <Skeleton width={100} height={20}/>
                           <div className="item_author">
                             <div className="author_list_pp">
-                              <Link to={`/author/${author.ownerId}`}>
+                              <Link to={`/author/${author.nftId}`}>
                                 <Skeleton width={50} height={50} borderRadius={500}/>
                                 <i className="fa fa-check"></i>
                               </Link>
@@ -183,7 +183,7 @@ const ItemDetails = () => {
                           <h6>{author.ownerName}</h6>
                           <div className="item_author">
                             <div className="author_list_pp">
-                              <Link to={`/author/${author.nftId}`}>
+                              <Link to={`/author/${author.ownerId}`}>
                                 <img className="lazy" src={author.ownerImage} alt="" />
                                 <i className="fa fa-check"></i>
                               </Link>

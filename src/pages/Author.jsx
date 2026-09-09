@@ -55,7 +55,7 @@ const Author = () => {
   useEffect(() => {
     fetchItems();
     window.scrollTo(0, 0);
-  }, []);
+  }, [paramsId]);
 
   if (!author) return null;
 

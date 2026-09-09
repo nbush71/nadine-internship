@@ -130,35 +130,35 @@ const NewItems = () => {
                   ))}
                 </>
               ) : (
-                items.map((id, authorId, authorImage, nftImage, nftId, title, price, likes, expiryDate, index) => (
+                items.map((item, index) => (
                   <div className="keen-slider__slide" key={index}>
                     <div className="nft__item">
                       <div className="author_list_pp">
-                        <Link to={`/author/${authorId}`}>
-                          <img className="lazy" src={authorImage} alt="" />
+                        <Link to={`/author/${item.authorId}`}>
+                          <img className="lazy" src={item.authorImage} alt="" />
                           <i className="fa fa-check"></i>
                         </Link>
                       </div>
-                      {new Date(expiryDate) > new Date() && (
+                      {new Date(item.expiryDate) > new Date() && (
                         <div className="de_countdown">
-                          {futureTime(expiryDate).hours}h{" "}
-                          {futureTime(expiryDate).minutes}m{" "}
-                          {futureTime(expiryDate).seconds}s
+                          {futureTime(item.expiryDate).hours}h{" "}
+                          {futureTime(item.expiryDate).minutes}m{" "}
+                          {futureTime(item.expiryDate).seconds}s
                         </div>
                       )}
                       <div className="nft__item_wrap">
-                        <Link to={`/item-details/${nftId}`}>
-                          <img src={nftImage} className="lazy nft__item_preview" alt="" />
+                        <Link to={`/item-details/${item.nftId}`}>
+                          <img src={item.nftImage} className="lazy nft__item_preview" alt="" />
                         </Link>
                       </div>
                       <div className="nft__item_info">
-                        <Link to={`/item-details/${nftId}`}>
-                          <h4>{title}</h4>
+                        <Link to={`/item-details/${item.nftId}`}>
+                          <h4>{item.title}</h4>
                         </Link>
-                        <div className="nft__item_price">{price}</div>
+                        <div className="nft__item_price">{item.price}</div>
                         <div className="nft__item_like">
                           <i className="fa fa-heart"></i>
-                          <span>{likes}</span>
+                          <span>{item.likes}</span>
                         </div>
                       </div>
                     </div>
