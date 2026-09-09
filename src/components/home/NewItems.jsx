@@ -76,8 +76,14 @@ const NewItems = () => {
     }
   }, [items]);
 
-    return (
-    <section id="section-items" className="no-bottom" data-aos="fade-in" data-aos-easing="ease" data-aos-delay="300">
+  return (
+    <section
+      id="section-items"
+      className="no-bottom"
+      data-aos="fade-in"
+      data-aos-easing="ease"
+      data-aos-delay="300"
+    >
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -86,94 +92,101 @@ const NewItems = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+        </div>
 
-          <div className="new-items-slider">
-            <button
-              onClick={() => instanceRef.current?.prev()}
-              className="d-nav-left"
-            >
-              <i className="fa fa-chevron-left"></i>
-            </button>
+        <div className="new-items-slider col-lg-12">
+          <button
+            onClick={() => instanceRef.current?.prev()}
+            className="d-nav-left"
+          >
+            <i className="fa fa-chevron-left"></i>
+          </button>
 
-            <div ref={sliderRef} className="keen-slider">
-              {isLoading ? (
-                <>
-                  {[1, 2, 3, 4].map((_, index) => (
-                    <div className="keen-slider__slide" key={index}>
-                      <div className="nft__item">
-                        <div className="author_list_pp">
-                          <Link to="/author/">
-                            <Skeleton width={50} height={50} borderRadius={500} />
-                          </Link>
-                        </div>
-                        <div className="de_countdown">
-                          <Skeleton width={100} height={20} />
-                        </div>
-                        <div className="nft__item_wrap">
-                          <Link to="/item-details">
-                            <Skeleton width={307} height={400} borderRadius={10} />
-                          </Link>
-                        </div>
-                        <div className="nft__item_info">
-                          <Link to="/item-details">
-                            <Skeleton width={100} height={20} />
-                          </Link>
-                          <div className="nft__item_price">
-                            <Skeleton width={100} height={20} />
-                          </div>
-                          <div className="nft__item_like">
-                            <i className="fa fa-heart"></i>
-                            <span>
-                              <Skeleton width={20} height={20} />
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              ) : (
-                items.map((item, index) => (
+          <div ref={sliderRef} className="keen-slider">
+            {isLoading ? (
+              <>
+                {[1, 2, 3, 4, 5, 6].map((_, index) => (
                   <div className="keen-slider__slide" key={index}>
                     <div className="nft__item">
                       <div className="author_list_pp">
-                        <Link to={`/author/${item.authorId}`}>
-                          <img className="lazy" src={item.authorImage} alt="" />
-                          <i className="fa fa-check"></i>
+                        <Link to="/author/">
+                          <Skeleton width={50} height={50} borderRadius={500} />
                         </Link>
                       </div>
-                      {new Date(item.expiryDate) > new Date() && (
-                        <div className="de_countdown">
-                          {futureTime(item.expiryDate).hours}h{" "}
-                          {futureTime(item.expiryDate).minutes}m{" "}
-                          {futureTime(item.expiryDate).seconds}s
-                        </div>
-                      )}
+                      <div className="de_countdown">
+                        <Skeleton width={100} height={20} />
+                      </div>
                       <div className="nft__item_wrap">
-                        <Link to={`/item-details/${item.nftId}`}>
-                          <img src={item.nftImage} className="lazy nft__item_preview" alt="" />
+                        <Link to="/item-details">
+                          <Skeleton width={307} height={400} borderRadius={10} />
                         </Link>
                       </div>
                       <div className="nft__item_info">
-                        <Link to={`/item-details/${item.nftId}`}>
-                          <h4>{item.title}</h4>
+                        <Link to="/item-details">
+                          <Skeleton width={100} height={20} />
                         </Link>
-                        <div className="nft__item_price">{item.price}</div>
+                        <div className="nft__item_price">
+                          <Skeleton width={100} height={20} />
+                        </div>
                         <div className="nft__item_like">
                           <i className="fa fa-heart"></i>
-                          <span>{item.likes}</span>
+                          <span>
+                            <Skeleton width={20} height={20} />
+                          </span>
                         </div>
                       </div>
                     </div>
                   </div>
-                ))
-              )}
-            </div>
-            <button onClick={() => instanceRef.current?.next()}
-              className="d-nav-right">
-              <i className="fa fa-chevron-right"></i>
-            </button>
+                ))}
+              </>
+            ) : (
+              items.map((item, index) => (
+                <div className="keen-slider__slide" key={index}>
+                  <div className="nft__item">
+                    <div className="author_list_pp">
+                      <Link to={`/author/${item.authorId}`}>
+                        <img className="lazy" src={item.authorImage} alt="" />
+                        <i className="fa fa-check"></i>
+                      </Link>
+                    </div>
+                    {new Date(item.expiryDate) > new Date() && (
+                      <div className="de_countdown">
+                        {futureTime(item.expiryDate).hours}h {" "}
+                        {futureTime(item.expiryDate).minutes}m {" "}
+                        {futureTime(item.expiryDate).seconds}s
+                      </div>
+                    )}
+                    <div className="nft__item_wrap">
+                      <Link to={`/item-details/${item.nftId}`}>
+                        <img
+                          src={item.nftImage}
+                          className="lazy nft__item_preview"
+                          alt=""
+                        />
+                      </Link>
+                    </div>
+                    <div className="nft__item_info">
+                      <Link to={`/item-details/${item.nftId}`}>
+                        <h4>{item.title}</h4>
+                      </Link>
+                      <div className="nft__item_price">{item.price}</div>
+                      <div className="nft__item_like">
+                        <i className="fa fa-heart"></i>
+                        <span>{item.likes}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
+
+          <button
+            onClick={() => instanceRef.current?.next()}
+            className="d-nav-right"
+          >
+            <i className="fa fa-chevron-right"></i>
+          </button>
         </div>
       </div>
     </section>

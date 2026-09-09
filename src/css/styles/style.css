@@ -16749,14 +16749,6 @@ img {
 .new-items-slider .d-nav-right {
   top: 50%;
   transform: translateY(-50%);
-}.new-items-slider {
-  position: relative;
-}
-
-.new-items-slider .d-nav-left,
-.new-items-slider .d-nav-right {
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .new-items-slider .keen-slider {
