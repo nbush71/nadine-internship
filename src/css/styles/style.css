@@ -14149,6 +14149,7 @@ a.read_more i {
   border: solid 2px #dddddd;
   z-index: 100;
   color: #0d0c22;
+  white-space: nowrap;
 }
 
 .de_countdown.bg-color-secondary {

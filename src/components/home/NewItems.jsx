@@ -42,6 +42,9 @@ const NewItems = () => {
       "(max-width: 1024px)": {
         slides: { perView: 2, spacing: 10 },
       },
+      "(max-width: 1200px)": {
+        slides: { perView: 3, spacing: 10 },
+      },
     },
   });
 
